@@ -16,7 +16,8 @@ LeBron James Born: December 30, 1984
 import java.util.Arrays;
 import java.util.EmptyStackException;
 
-public final class ArrayStack<T> implements StackInterface<T> {
+public final class Stack<T> implements StackInterface<T> 
+{
    
    private T[] stack;     // Array of Stack Entries 
    private int topIndex;   // Index of op Entry 
@@ -24,7 +25,7 @@ public final class ArrayStack<T> implements StackInterface<T> {
    private static final int DEFAULT_CAPACITY = 50;
    private static final int MAX_CAPACITY = 10000;
    
-   public ArrayStack() {
+   public Stack() {
       this(DEFAULT_CAPACITY);
    }// End default constructor
 	// ************************************************************************
@@ -36,7 +37,8 @@ public final class ArrayStack<T> implements StackInterface<T> {
 	 * 
 	 * @return none.
 	 */  
-   public ArrayStack(int initialCapacity) {
+   public Stack ( int initialCapacity) 
+   {
       
       integrityOK = false;
       checkCapacity(initialCapacity);
