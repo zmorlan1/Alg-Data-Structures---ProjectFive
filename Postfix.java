@@ -9,11 +9,11 @@ public class Postfix
 {	
 		/**
 		 * This method checks if a specified character is any of the valid 
-		 * BIDMAS operators. 
+		 * PEMDAS operators. 
 		 * @param	character
 		 * @return	true if the operator is valid + false if otherwise
 		 */
-	    private boolean isOperator ( char character) 
+	    private static boolean isOperator ( char character) 
 	    {
 	        if ( character == '+' || character == '-' || character == '*' ||
 	        		
@@ -26,9 +26,18 @@ public class Postfix
 	        }
 	        
 	        return false;
-	    }
-
-	    public int getPrecedence ( char character) 
+	    }// End isOperator
+//*****************************************************************************	
+	    /**
+	    * This method returns a value for the specific 
+	    * PEMDAS operators. 
+	    * @param	   character
+	    * @return      1 if the value is a + or -
+	    * @return	   2 if the value is a * or /
+            * @return	   3 if the value is a ^
+	    * @return     -1 if the value is invalid
+	    */
+	    public static int getPrecedence ( char character) 
 	    {
 	        if ( character == '+' || character == '-') 
 	        {        
@@ -44,10 +53,70 @@ public class Postfix
 	            return 3;
 	        }
 	        return -1;
-	    }
-
-	    // Check if the specified character is an operand
-	    public boolean isOperand ( char character) 
+	    } // End getPrecedence
+//*****************************************************************************       
+      /**
+      * Method checks to see if the number of parentheses 
+      * in the infix are the same amount
+      * @param	String infix
+      * @return	true if even amount of both parentheses
+      */
+      public boolean parenthesesCheck(String infix) {
+         int left = 0;
+         int right = 0;
+         
+            for(int i = 0; i < infix.length(); i++) {
+               if(infix.charAt(i) == '(') {
+               
+                  left++;  
+                   
+               }// End if
+               if(infix.charAt(i) == ')') {
+               
+                  right++;
+                     
+               }// End if
+            }// End for loop 
+            if(left == right){
+               
+               return true;
+               
+            } // End if
+            else {
+            
+               return false;
+            
+            }// End else
+       }// End parenthesesCheck
+//*****************************************************************************
+      /**
+      * Method checks to see if the operands all have  
+      * an operator next to them 
+      * @param	   String infix 
+      * @return	   true if no operands are next to eachother
+      */
+      public static boolean operandCheck ( String infix) {
+	      char first;
+         char second;
+         
+         for(int i = 0; i < infix.length() - 1; i++) {
+            first = infix.charAt(i);
+            second = infix.charAt(i+1);
+            
+            if(isOperand(first) && isOperand(second)){
+               return false;
+            }// End if             
+         }// End for loop 
+         return true;
+	   } // End operandCheck
+//*****************************************************************************       
+	    /**
+	    * This method checks if a specified character is within a specific
+       * range of characters  
+	    * @param	character
+	    * @return	true 
+	    */
+	    public static boolean isOperand ( char character) 
 	    {
 	        if (character >= 'a' && character <= 'z' || 
 	        	character >= 'A' && character <= 'Z'
@@ -56,18 +125,25 @@ public class Postfix
 	        	return true;
 	        }
 	        return false;
-	    }
-
-	    public String convertToPostfix ( String infix) 
+	    } // End isOperand
+//*****************************************************************************       
+	    /**
+	    * This method converts a string to a 
+            * postfix form  
+	    * @param	String characters 
+	    * @return	String postfix form initial String
+	    */
+	    public static String convertToPostfix ( String infix) 
 	    {
-	        Stack<Character> stack = new Stack<Character>();
+	        ArrayStack<Character> stack = new ArrayStack<Character>();
 	        String postfix = "";
 	        
 	        char character;
 
+
 	        for ( int i = 0; i < infix.length(); i++) 
 	        {
-	        	// pick each letter in infix string
+	            // pick each letter in infix string
 	            character = infix.charAt(i);
 
 	            // Then, check if character is an operand
@@ -75,13 +151,13 @@ public class Postfix
 	            if ( isOperand ( character)) 
 	            {
 	                postfix += ( character);
-	            } 
+	            } // End if 
 	            else if ( character == '(') 
 	            {
 	                stack.push ( character);
-	            }
-	            // If current character is ‘)’, pop and output from stack
-	            // when ‘(‘ is encountered we stop popping.
+	            } // End else if
+	            // If current character is â€˜)â€™, pop and output from stack
+	            // when â€˜(â€˜ is encountered we stop popping.
 	            else if ( character == ')') 
 	            {
 
@@ -108,12 +184,14 @@ public class Postfix
 	                }
 	                stack.push ( character);
 	            }
-	        }
+	        }// End for loop
 
 	        while ( !stack.isEmpty()) 
 	        {
 	        	postfix += ( stack.pop());
-	        }
-	        return postfix;
-	    }
-}
+	        
+           } // End while
+           return postfix;
+      } // end convertToPostfix
+   
+}// End postfix Class
