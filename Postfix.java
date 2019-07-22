@@ -99,9 +99,9 @@ public class Postfix
 	      char first;
          char second;
          
-         for(int i = 0; i < infix.length() - 1; i++) {
+         for(int i = 0; i < infix.length() - 2; i++) {
             first = infix.charAt(i);
-            second = infix.charAt(i+1);
+            second = infix.charAt(i+2);
             
             if(isOperand(first) && isOperand(second)){
                return false;
