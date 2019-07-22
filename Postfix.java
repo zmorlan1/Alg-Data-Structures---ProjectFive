@@ -95,20 +95,23 @@ public class Postfix
       * @param	   String infix 
       * @return	   true if no operands are next to eachother
       */
-      public static boolean operandCheck ( String infix) {
-	      char first;
+	public static boolean operandCheck ( String infix) {
+	      
+         String withoutSpaces = infix.replaceAll("\\s+","");
+         char first;
          char second;
          
-         for(int i = 0; i < infix.length() - 2; i++) {
-            first = infix.charAt(i);
-            second = infix.charAt(i+2);
+         for(int i = 0; i < withoutSpaces.length() - 1; i++) {
+            
+            first = withoutSpaces.charAt(i);
+            second = withoutSpaces.charAt(i+1);
             
             if(isOperand(first) && isOperand(second)){
                return false;
             }// End if             
          }// End for loop 
          return true;
-	   } // End operandCheck
+	 } // End operandCheck
 //*****************************************************************************       
 	    /**
 	    * This method checks if a specified character is within a specific
